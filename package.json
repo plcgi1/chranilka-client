@@ -1,0 +1,29 @@
+{
+  "name": "chranilka-rest-client",
+  "description": "Chranilka server REST client",
+  "version": "1.0.0",
+  "license": "MIT",
+  "author": "Aliaksandr <plcgi1@gmail.com>",
+  "repository": "git@github.com:plcgi1/chranilka-client.git",
+  "homepage": "https://github.com/plcgi1/chranilka-client",
+  "scripts": {
+    "prettier": "prettier './**/*.js'",
+    "prettier:check": "yarn prettier --check",
+    "prettier:fix": "yarn prettier --write",
+    "lint:js:fix": "eslint . --fix",
+    "lint:fix": "yarn lint:js:fix && yarn prettier:fix"
+  },
+  "dependencies": {
+    "assert": "^2.0.0",
+    "node-fetch": "^3.2.10"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.4.1",
+    "fastify": "^3.20.2",
+    "prettier": "^2.3.2",
+    "tap": "^15.0.9"
+  }
+}
