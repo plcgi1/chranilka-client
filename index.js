@@ -96,13 +96,13 @@ module.exports = class ChranilkaClient {
     const text = await result.text()
     const json = JSON.parse(text || '{}')
 
-    if (json.name && result.code === 401 && /empty-token/i.test(json.name)) {
+    if (json.name && result.code === 401 && /token-expired/i.test(json.name)) {
       // {
-      //   "name": "empty-token",
-      //   "message": "Empty jwt token"
+      //   "name": "token-expired",
+      //   "message": "Auth expired"
       // }
-      // await this.initialize()
-      // return this.request(opts, options)
+      await this.initialize()
+      return this.request(opts, options)
     }
 
     return json
