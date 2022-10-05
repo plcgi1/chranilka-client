@@ -19,7 +19,7 @@ module.exports = class ChranilkaClient {
       return true
     }
 
-    const response = await fetch(`${this.api}/api/auth`, {
+    const response = await fetch(`${this.api}/api/v1/auth`, {
       method: 'POST',
       body: JSON.stringify({
         email: this.username,
@@ -35,9 +35,8 @@ module.exports = class ChranilkaClient {
       data.token,
       `Error to get auth token: api url: ${this.api}.response: ${JSON.stringify(data)}`
     ) // we can't start taking without JWT
-
     this.token = data.token.token
-    this.refreshToken = refreshToken.token
+    this.refreshToken = data.refreshToken.token
   }
 
   authHeaders() {
@@ -97,7 +96,7 @@ module.exports = class ChranilkaClient {
     const text = await result.text()
     const json = JSON.parse(text || '{}')
 
-    if (json.name && result.code === 401 && /token-expired/i.test(json.name)) {
+    if (json.message && result.status === 403 && /token-expired/i.test(json.message)) {
       // {
       //   "name": "token-expired",
       //   "message": "Auth expired"
@@ -113,18 +112,17 @@ module.exports = class ChranilkaClient {
     return this.request(
       {
         method: 'get',
-        path: `/api/key/${keyId}`,
+        path: `/api/v1/keys/one/${keyId}`,
       },
       options
     )
   }
 
   async refresh() {
-    const url = this.getUrl('/api/auth/refresh')
+    const url = this.getUrl('/api/v1/auth/refresh')
 
     const result = await fetch(url, {
-      method: 'post',
-      body: JSON.stringify(opts.params),
+      method: 'get',
       headers: {
         'content-type': 'application/json',
         authorization: `Bearer ${this.refreshToken}`,
@@ -135,10 +133,10 @@ module.exports = class ChranilkaClient {
 
     assert(
       json.token,
-      `Error to get auth token: api url: ${this.api}.response: ${JSON.stringify(data)}`
+      `Error to get auth token: api url: ${this.api}.response: text`
     ) // we can't start taking without JWT
 
-    this.token = data.token.token
-    this.refreshToken = refreshToken.token
+    this.token = json.token.token
+    this.refreshToken = json.refreshToken.token
   }
 }
