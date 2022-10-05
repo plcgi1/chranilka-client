@@ -37,6 +37,7 @@ module.exports = class ChranilkaClient {
     ) // we can't start taking without JWT
 
     this.token = data.token.token
+    this.refreshToken = refreshToken.token
   }
 
   authHeaders() {
@@ -101,7 +102,7 @@ module.exports = class ChranilkaClient {
       //   "name": "token-expired",
       //   "message": "Auth expired"
       // }
-      await this.initialize()
+      await this.refresh()
       return this.request(opts, options)
     }
 
@@ -116,5 +117,28 @@ module.exports = class ChranilkaClient {
       },
       options
     )
+  }
+
+  async refresh() {
+    const url = this.getUrl('/api/auth/refresh')
+
+    const result = await fetch(url, {
+      method: 'post',
+      body: JSON.stringify(opts.params),
+      headers: {
+        'content-type': 'application/json',
+        authorization: `Bearer ${this.refreshToken}`,
+      },
+    })
+    const text = await result.text()
+    const json = JSON.parse(text || '{}')
+
+    assert(
+      json.token,
+      `Error to get auth token: api url: ${this.api}.response: ${JSON.stringify(data)}`
+    ) // we can't start taking without JWT
+
+    this.token = data.token.token
+    this.refreshToken = refreshToken.token
   }
 }

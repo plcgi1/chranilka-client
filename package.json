@@ -1,7 +1,7 @@
 {
   "name": "chranilka-rest-client",
   "description": "Chranilka server REST client",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "license": "MIT",
   "author": "Aliaksandr <plcgi1@gmail.com>",
   "repository": "git@github.com:plcgi1/chranilka-client.git",
