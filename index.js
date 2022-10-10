@@ -118,6 +118,20 @@ module.exports = class ChranilkaClient {
     )
   }
 
+  getKeyById(keyId, options = {}) {
+    return this.getKey(keyId, options)
+  }
+
+  getKeyByCustomerIdExternalCasinoId(customerId, externalCasinoId, options = {}) {
+    return this.request(
+      {
+        method: 'get',
+        path: `/api/v1/keys/one/${customerId}/${externalCasinoId}`,
+      },
+      options
+    )
+  }
+
   async refresh() {
     const url = this.getUrl('/api/v1/auth/refresh')
 
