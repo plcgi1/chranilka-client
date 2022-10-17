@@ -122,11 +122,11 @@ module.exports = class ChranilkaClient {
     return this.getKey(keyId, options)
   }
 
-  getKeyByCustomerIdExternalCasinoId(customerId, externalCasinoId, options = {}) {
+  getKeyByCustomerIdExternalKeyName(customerId, externalKeyName, options = {}) {
     return this.request(
       {
         method: 'get',
-        path: `/api/v1/keys/one/${customerId}/${externalCasinoId}`,
+        path: `/api/v1/keys/one/${customerId}/${externalKeyName}`,
       },
       options
     )
