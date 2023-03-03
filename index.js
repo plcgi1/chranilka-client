@@ -147,7 +147,7 @@ module.exports = class ChranilkaClient {
 
     assert(
       json.token,
-      `Error to refresh auth token: api url: ${this.api}.response: text`
+      `Error to refresh auth token: api url: ${this.api}.response: ${text}`
     ) // we can't start taking without JWT
 
     this.token = json.token.token
