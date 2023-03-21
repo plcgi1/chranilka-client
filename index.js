@@ -153,4 +153,13 @@ module.exports = class ChranilkaClient {
     this.token = json.token.token
     this.refreshToken = json.refreshToken.token
   }
+
+  async getExhangePrices() {
+    return this.request(
+      {
+        method: 'get',
+        path: `/api/v1/exchange-prices/list`,
+      },
+    )
+  }
 }
